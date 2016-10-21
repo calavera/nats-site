@@ -103,7 +103,8 @@ gulp.task('clean', function() {
 });
 
 // HUGO
-gulp.task('hugo', shell.task('hugo'))
+gulp.task('hugo', shell.task('hugo'));
+gulp.task('hugo-preview', shell.task('hugo --buildDrafts --buildFuture'));
 
 // Watch
 gulp.task('watch', function() {
@@ -120,6 +121,11 @@ gulp.task('watch', function() {
 
 // Default Task
 gulp.task('default', [ 'less', 'js', 'img', 'font', 'docsImages', 'userLogos', 'partnerLogos', 'blogImages', 'blogImagesGifs', 'watch' ]);
+
+// Build deploy previews
+gulp.task('build-preview', function (callback) {
+  runSequence( 'clean', [ 'less', 'js', 'img', 'font', 'docsImages', 'userLogos', 'partnerLogos', 'blogImages', 'blogImagesGifs' ], 'hugo-preview', callback);
+});
 
 // Build for Production
 gulp.task('build', function (callback) {
